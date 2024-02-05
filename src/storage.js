@@ -3,11 +3,11 @@ import { Project } from "./project";
 import { Task } from "./task";
 
 export function LocalStorage() {
-  function save(value) {
-    localStorage.setItem('todolist', JSON.stringify(value));
+  function save(todolist) {
+    localStorage.setItem('todolist', JSON.stringify(todolist));
   }
 
-  function load(){
+  function load() {
     const todolistJSON = JSON.parse(localStorage.getItem('todolist'));
 
     const todolist = Todolist();
