@@ -1,5 +1,8 @@
 import 'normalize.css';
-import { LocalStorage } from './storage';
+import { Task } from './task';
+import { Project } from './project';
+import { Todolist } from './todolist';
+import { render } from './render';
 
 // const houseworkTask = Task("Do housework", "There's dust again.", new Date(), "medium");
 // const workoutTask = Task("Workout", "", new Date(), "low");
@@ -13,8 +16,12 @@ import { LocalStorage } from './storage';
 
 // const todolist = Todolist();
 // todolist.addProject(workoutProject);
-const storage = LocalStorage();
-const todolist = storage.load();
-storage.save(todolist);
-todolist.log();
+// todolist.removeTask(houseworkTask);
 
+// const storage = LocalStorage();
+// const todolist = storage.load();
+// storage.save(todolist);
+
+// todolist.log();
+
+render();

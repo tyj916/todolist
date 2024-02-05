@@ -15,7 +15,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Todolist',
+      template: 'src/template.html',
     }),
   ],
   module: {
