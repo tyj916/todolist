@@ -12,7 +12,8 @@ export function Todolist() {
   }
 
   function getProjectByTitle(title) {
-    return projects.find(project => project.title === title);
+    const targetProject = projects.find(project => project.title === title);
+    return targetProject ? targetProject : projects[0];
   }
 
   function addProject(project) {
