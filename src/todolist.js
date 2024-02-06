@@ -11,6 +11,10 @@ export function Todolist() {
     return allTasks;
   }
 
+  function getProjectByTitle(title) {
+    return projects.find(project => project.title === title);
+  }
+
   function addProject(project) {
     projects.push(project);
   }
@@ -18,6 +22,10 @@ export function Todolist() {
   function removeProject(project) {
     const taskIndex = projects.findIndex(() => project);
     projects.splice(taskIndex, 1);
+  }
+
+  function addTask(task, project) {
+
   }
 
   function removeTask(task) {
@@ -35,8 +43,10 @@ export function Todolist() {
   return {
     projects,
     getAllTasks,
+    getProjectByTitle,
     addProject,
     removeProject,
+    addTask,
     removeTask,
     log,
   }
