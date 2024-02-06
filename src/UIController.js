@@ -12,9 +12,11 @@ export function UIController() {
 
   const content = body.querySelector("#content");
 
+  const projectDialog = body.querySelector("dialog#project");
+
   // bind events
   homeBtn.addEventListener("click", renderHome);
-  addProjectBtn.addEventListener("click", ()=>{});
+  addProjectBtn.addEventListener("click", showAddProjectDialog);
 
   function clearSidebarProjects() {
     projectsContainer.textContent = '';
@@ -40,6 +42,7 @@ export function UIController() {
   function renderHome() {
     const storage = LocalStorage();
     const todolist = storage.load();
+
     const allTasks = todolist.getAllTasks();
     const home = Project("All Tasks", "Hi, how are you today.");
     allTasks.forEach(task => {
@@ -103,6 +106,13 @@ export function UIController() {
     completeBtn.textContent = "✓";
     detailsBtn.textContent = "Details";
     removeBtn.textContent = "❌";
+  }
+
+  function showAddProjectDialog() {
+    const dialogTitle = projectDialog.querySelector("h2");
+    dialogTitle.textContent = "New Project";
+
+    projectDialog.showModal();
   }
 
   return {
