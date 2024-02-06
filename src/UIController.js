@@ -39,15 +39,7 @@ export function UIController() {
       const title = document.createElement('button');
       title.classList.add('project', 'title');
       title.textContent = project.title;
-      title.addEventListener('click', (event) => {
-        event.target.parentNode.childNodes.forEach(node => {
-          if (node.classList.contains('current')){
-            node.classList.remove('current');
-          }
-        })
-        event.target.classList.add('current');
-        renderProject(project);
-      });
+      title.addEventListener('click', () => renderProject(project));
       
       projectsContainer.appendChild(title);
     });
@@ -176,6 +168,7 @@ export function UIController() {
     todolist.addTask(newTask, targetProject);
     storage.save(todolist);
     renderProject(targetProject);
+    renderSidebarProjects();
     taskDialog.close();
   }
 
