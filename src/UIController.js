@@ -114,6 +114,7 @@ export function UIController() {
     const detailsBtn = document.createElement("button");
     const removeBtn = document.createElement("button");
 
+    completeBtn.addEventListener("click", () => completeTask(task));
     detailsBtn.addEventListener('click', () => editTask(task));
     removeBtn.addEventListener('click', () => removeTask(task));
 
@@ -127,6 +128,10 @@ export function UIController() {
     container.classList.add("task", "container");
     title.classList.add("task", "title");
     dueDate.classList.add("task", "due-date");
+
+    if (task.isCompleted) {
+      container.classList.add('completed');
+    }
 
     container.dataset.priority = task.priority;
 
@@ -222,6 +227,23 @@ export function UIController() {
     dueDateElement.value = '';
 
     taskDialog.close();
+  }
+
+  function completeTask(task) {
+    const todolist = storage.load();
+    const targetTask = todolist.getTaskByTitle(task.title);
+
+    if (targetTask.isCompleted) {
+      targetTask.isCompleted = false;
+    } else {
+      targetTask.isCompleted = true;
+    }
+
+    storage.save(todolist);
+
+    const currentProjectTitle = content.querySelector("h2").textContent;
+    const targetProject = todolist.getProjectByTitle(currentProjectTitle);
+    renderProject(targetProject);
   }
 
   function editTask(task) {
