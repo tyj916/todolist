@@ -230,6 +230,9 @@ export function UIController() {
     const description = taskDialog.querySelector("#description");
     const dueDate = taskDialog.querySelector("#due-date");
     const priority = taskDialog.querySelector("#priority");
+    const submitBtn = taskDialog.querySelector("#submit");
+
+    submitBtn.addEventListener("click", () => updateTask(task));
 
     dialogTitle.textContent = "Task Details";
     title.value = task.title;
@@ -238,6 +241,35 @@ export function UIController() {
     priority.value = task.priority;
 
     taskDialog.showModal();
+  }
+
+  function updateTask(task) {
+    const todolist = storage.load();
+    const currentProjectTitle = content.querySelector("h2").textContent;
+    const targetProject = todolist.getProjectByTitle(currentProjectTitle);
+
+    const targetTask = todolist.getTaskByTitle(task.title, targetProject);
+
+    const title = taskDialog.querySelector("#title");
+    const description = taskDialog.querySelector("#description");
+    const dueDate = taskDialog.querySelector("#due-date");
+    const priority = taskDialog.querySelector("#priority");
+
+    targetTask.title = title.value;
+    targetTask.description = description.value;
+    targetTask.dueDate = dueDate.value;
+    targetTask.priority = priority.value;
+
+    storage.save(todolist);
+
+    title.value = '';
+    description.value = '';
+    dueDate.value = '';
+    priority.value = '';
+
+    taskDialog.close();
+
+    renderProject(targetProject);
   }
 
   function removeTask(task) {

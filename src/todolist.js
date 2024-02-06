@@ -33,6 +33,39 @@ export function Todolist() {
     project.addTask(task);
   }
 
+  function getTask(task, targetProject) {
+    let target;
+
+    if (targetProject) {
+      target = targetProject.getTask(task);
+    } else {
+      projects.forEach(project => {
+        project.tasks.forEach(item => {
+          if (item === task) target = item;
+        });
+      })
+    }
+
+    return target;
+  }
+
+  function getTaskByTitle(title, targetProject) {
+    let target;
+    if (!targetProject) {
+      projects.forEach(project => {
+        project.tasks.forEach(task => {
+          if (task.title === title) {
+            target = task;
+          }
+        });
+      });
+    } else {
+      target = targetProject.getTaskByTitle(title);
+    }
+
+    return target;
+  }
+
   function removeTask(target) {
     // if (targetProject) {
     //   targetProject.removeTask(task);
@@ -71,6 +104,8 @@ export function Todolist() {
     addProject,
     removeProject,
     addTask,
+    getTask,
+    getTaskByTitle,
     removeTask,
     removeTaskByTitle,
     log,
