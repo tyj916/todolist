@@ -6,7 +6,7 @@ export function Project(title, description) {
   }
   
   function removeTask(task) {
-    const taskIndex = tasks.findIndex(() => task);
+    const taskIndex = tasks.indexOf(task);
     tasks.splice(taskIndex, 1);
   }
 
