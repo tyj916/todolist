@@ -129,8 +129,11 @@ export function UIController() {
   }
 
   function addNewProject() {
-    const title = projectDialog.querySelector("#title").value;
-    const description = projectDialog.querySelector("#description").value;
+    const titleElement = projectDialog.querySelector("#title");
+    const descriptionElement = projectDialog.querySelector("#description");
+
+    const title = titleElement.value;
+    const description = descriptionElement.value;
 
     const newProject = Project(title, description);
 
@@ -138,6 +141,9 @@ export function UIController() {
     todolist.addProject(newProject);
     storage.save(todolist);
     renderSidebarProjects();
+
+    titleElement.value = '';
+    descriptionElement.value = '';
 
     projectDialog.close();
   }
