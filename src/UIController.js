@@ -154,11 +154,16 @@ export function UIController() {
   }
 
   function addNewTask() {
-    const title = taskDialog.querySelector("#title").value;
-    const description = taskDialog.querySelector("#description").value;
-    const dueDate = taskDialog.querySelector("#due-date").value;
-    const priority = taskDialog.querySelector("#priority").value;
+    const titleElement = taskDialog.querySelector("#title");
+    const descriptionElement = taskDialog.querySelector("#description");
+    const dueDateElement = taskDialog.querySelector("#due-date");
+    const priorityElement = taskDialog.querySelector("#priority");
     const currentProjectTitle = content.querySelector("h2").textContent;
+
+    const title = titleElement.value;
+    const description = descriptionElement.value;
+    const dueDate = dueDateElement.value;
+    const priority = priorityElement.value;
 
     const newTask = Task(title, description, dueDate, priority);
 
@@ -167,8 +172,14 @@ export function UIController() {
 
     todolist.addTask(newTask, targetProject);
     storage.save(todolist);
+
     renderProject(targetProject);
     renderSidebarProjects();
+
+    titleElement.value = '';
+    descriptionElement.value = '';
+    dueDateElement.value = '';
+
     taskDialog.close();
   }
 
