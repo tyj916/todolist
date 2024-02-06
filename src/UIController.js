@@ -1,4 +1,5 @@
 import { LocalStorage } from "./storage";
+import { Project } from "./project";
 
 export function UIController() {
   // cache DOM
@@ -12,7 +13,7 @@ export function UIController() {
   const content = body.querySelector("#content");
 
   // bind events
-  homeBtn.addEventListener("click", ()=>{});
+  homeBtn.addEventListener("click", renderHome);
   addProjectBtn.addEventListener("click", ()=>{});
 
   function clearSidebarProjects() {
@@ -23,14 +24,29 @@ export function UIController() {
     content.textContent = '';
   }
 
-  function renderSidebarProjects(projects) {
-    projects.forEach(project => {
+  function renderSidebarProjects() {
+    const storage = LocalStorage();
+    const todolist = storage.load();
+
+    todolist.projects.forEach(project => {
       const title = document.createElement('button');
       title.classList.add('project', 'title');
       title.textContent = project.title;
       
       projectsContainer.appendChild(title);
     });
+  }
+
+  function renderHome() {
+    const storage = LocalStorage();
+    const todolist = storage.load();
+    const allTasks = todolist.getAllTasks();
+    const home = Project("All Tasks", "Hi, how are you today.");
+    allTasks.forEach(task => {
+      home.addTask(task);
+    });
+
+    renderProject(home);
   }
 
   function renderProject(project) {
@@ -93,6 +109,7 @@ export function UIController() {
     clearSidebarProjects,
     clearContent,
     renderSidebarProjects,
+    renderHome,
     renderProject,
   }
 }

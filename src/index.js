@@ -6,33 +6,31 @@ import { Todolist } from './todolist';
 import { LocalStorage } from './storage';
 import { UIController } from './UIController';
 
-// const houseworkTask = Task("Do housework", "There's dust again.", new Date(), "medium");
-// const workoutTask = Task("Workout", "", new Date(), "low");
+const housework = Task("Do housework", "There's dust again.", new Date(), "medium");
+const code = Task("Code!!", "Do your coding bro", new Date(), 'high');
+const read = Task("Read book", "Read? Meh I really want to sleep", new Date(), 'low');
+const pullup = Task("Pull up", "Pull up bro!", new Date(), "low");
+const pushup = Task("Push up", "Push up!!!!", new Date(), 'low');
 
-// const workoutProject = Project("Workout", "");
-// workoutProject.addTask(houseworkTask);
-// workoutProject.addTask(houseworkTask);
-// workoutProject.addTask(workoutTask);
+const workout = Project("Workout", "Gotta be strong!");
+workout.addTask(pullup);
+workout.addTask(pushup);
+workout.addTask(housework);
+workout.removeTask(housework);
 
-// workoutProject.removeTask(houseworkTask);
+const study = Project("Study", "Gotta be smart.");
+study.addTask(code);
+study.addTask(read);
+study.addTask(housework);
 
-// const todolist = Todolist();
-// todolist.addProject(workoutProject);
-// todolist.removeTask(houseworkTask);
-
-// storage.save(todolist);
-
-// todolist.log();
+const todolist = Todolist();
+todolist.addProject(workout);
+todolist.addProject(study);
+todolist.removeTask(housework);
 
 const storage = LocalStorage();
-const todolist = storage.load();
-const allTasks = todolist.getAllTasks();
-const allProjects = todolist.projects;
-const home = Project("All Tasks", "Hi, how are you today.");
-allTasks.forEach(task => {
-  home.addTask(task);
-});
+storage.save(todolist);
 
 const UI = UIController();
-UI.renderProject(home);
-UI.renderSidebarProjects(allProjects);
+UI.renderHome();
+UI.renderSidebarProjects();
