@@ -36,8 +36,8 @@ export function UIController() {
     const todolist = storage.load();
 
     todolist.projects.forEach(project => {
-      const container = document.createElement('div');
-      const title = document.createElement('button');
+      const container = document.createElement('button');
+      const title = document.createElement('span');
       const removeBtn = document.createElement('a');
       
       title.classList.add('project', 'title');
@@ -46,7 +46,7 @@ export function UIController() {
       title.textContent = project.title;
       removeBtn.textContent = '❌';
 
-      title.addEventListener('click', () => renderProject(project));
+      container.addEventListener('click', () => renderProject(project));
       removeBtn.addEventListener('click', () => removeProject(project));
       
       container.appendChild(title);
@@ -76,6 +76,7 @@ export function UIController() {
     clearContent();
 
     const container = document.createElement("div");
+    const header = document.createElement("div");
     const title = document.createElement("h2");
     const description = document.createElement("p");
     const tasksContainer = document.createElement("div");
@@ -83,13 +84,15 @@ export function UIController() {
 
     addTaskBtn.addEventListener("click", showAddTaskDialog);
 
-    container.appendChild(title);
-    container.appendChild(description);
-    container.appendChild(addTaskBtn);
+    header.appendChild(title);
+    header.appendChild(description);
+    header.appendChild(addTaskBtn);
+    container.appendChild(header);
     container.appendChild(tasksContainer);
     content.appendChild(container);
 
     container.classList.add("content", "container");
+    header.classList.add("content", "header");
     title.classList.add("content", "title");
     description.classList.add("content", "description");
     tasksContainer.id = "tasks-container";
@@ -112,7 +115,7 @@ export function UIController() {
     const dueDate = document.createElement("p");
     const completeBtn = document.createElement("button");
     const detailsBtn = document.createElement("button");
-    const removeBtn = document.createElement("button");
+    const removeBtn = document.createElement("a");
 
     completeBtn.addEventListener("click", () => completeTask(task));
     detailsBtn.addEventListener('click', () => editTask(task));
@@ -128,6 +131,9 @@ export function UIController() {
     container.classList.add("task", "container");
     title.classList.add("task", "title");
     dueDate.classList.add("task", "due-date");
+    completeBtn.classList.add("task", "complete");
+    detailsBtn.classList.add("task", "details");
+    removeBtn.classList.add("task", "remove");
 
     if (task.isCompleted) {
       container.classList.add('completed');
