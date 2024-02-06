@@ -25,7 +25,7 @@ export function Todolist() {
   }
 
   function removeProject(project) {
-    const taskIndex = projects.findIndex(() => project);
+    const taskIndex = projects.indexOf(project);
     projects.splice(taskIndex, 1);
   }
 

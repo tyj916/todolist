@@ -12,7 +12,7 @@ export function Task(title, description, dueDate, priority) {
   return {
     title,
     description,
-    dueDate,
+    dueDate: new Date(dueDate).toISOString().slice(0, 16),
     priority,
     isCompleted,
     toggleComplete,
