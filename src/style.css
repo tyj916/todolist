@@ -1,0 +1,9 @@
+.task.container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.task.container .title {
+  flex: 1;
+}
