@@ -58,6 +58,11 @@ export function UIController() {
   }
 
   function renderProject(project) {
+    if (!project) {
+      renderHome();
+      return;
+    }
+
     clearContent();
 
     const container = document.createElement("div");
@@ -84,7 +89,9 @@ export function UIController() {
     description.textContent = project.description;
     addTaskBtn.textContent = "+ New Task";
 
-    project.tasks.forEach(renderTask);
+    project.tasks.forEach(task => renderTask(task, project));
+
+    renderSidebarProjects();
   }
 
   function renderTask(task) {
@@ -96,6 +103,8 @@ export function UIController() {
     const completeBtn = document.createElement("button");
     const detailsBtn = document.createElement("button");
     const removeBtn = document.createElement("button");
+
+    removeBtn.addEventListener('click', () => removeTask(task));
 
     container.appendChild(completeBtn);
     container.appendChild(title);
@@ -174,19 +183,27 @@ export function UIController() {
     const newTask = Task(title, description, dueDate, priority);
 
     const todolist = storage.load();
-    const targetProject = todolist.getProjectByTitle(currentProjectTitle);
+    const targetProject = todolist.getProjectByTitle(currentProjectTitle) ? todolist.getProjectByTitle(currentProjectTitle) : todolist.projects[0];
 
     todolist.addTask(newTask, targetProject);
     storage.save(todolist);
 
-    renderProject(targetProject);
-    renderSidebarProjects();
+    renderProject(todolist.getProjectByTitle(currentProjectTitle));
 
     titleElement.value = '';
     descriptionElement.value = '';
     dueDateElement.value = '';
 
     taskDialog.close();
+  }
+
+  function removeTask(task) {
+    const todolist = storage.load();
+    todolist.removeTaskByTitle(task.title);
+    storage.save(todolist);
+
+    const currentProjectTitle = content.querySelector("h2").textContent;
+    renderProject(todolist.getProjectByTitle(currentProjectTitle));
   }
 
   return {

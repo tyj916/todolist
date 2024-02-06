@@ -27,7 +27,6 @@ import { UIController } from './UIController';
 // todolist.addProject(Project("Default", "Unassigned tasks will be stored here!"));
 // todolist.addProject(workout);
 // todolist.addProject(study);
-// todolist.removeTask(housework);
 // const getProject = todolist.getProjectByTitle("Study");
 // console.log(getProject);
 

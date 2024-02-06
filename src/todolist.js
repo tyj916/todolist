@@ -11,9 +11,13 @@ export function Todolist() {
     return allTasks;
   }
 
-  function getProjectByTitle(title) {
-    const targetProject = projects.find(project => project.title === title);
+  function getProject(target) {
+    const targetProject = projects.find(project => project === target);
     return targetProject ? targetProject : projects[0];
+  }
+
+  function getProjectByTitle(title) {
+    return projects.find(project => project.title === title);
   }
 
   function addProject(project) {
@@ -29,12 +33,30 @@ export function Todolist() {
     project.addTask(task);
   }
 
-  function removeTask(task) {
+  function removeTask(target) {
+    // if (targetProject) {
+    //   targetProject.removeTask(task);
+    // } else {
+    //   projects.forEach(project => {
+    //     if (project.tasks.includes(task)) {
+    //       project.removeTask(task);
+    //     }
+    //   });
+    // }
+
     projects.forEach(project => {
       if (project.tasks.includes(task)) {
         project.removeTask(task);
       }
     });
+  }
+
+  function removeTaskByTitle(title) {
+    projects.forEach(project => {
+      project.tasks.forEach(task => {
+        if (task.title === title) project.removeTask(task);
+      })
+    })
   }
 
   function log() {
@@ -44,11 +66,13 @@ export function Todolist() {
   return {
     projects,
     getAllTasks,
+    getProject,
     getProjectByTitle,
     addProject,
     removeProject,
     addTask,
     removeTask,
+    removeTaskByTitle,
     log,
   }
 }
