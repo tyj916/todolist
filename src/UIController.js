@@ -2,6 +2,8 @@ import { LocalStorage } from "./storage";
 import { Project } from "./project";
 
 export function UIController() {
+  const storage = LocalStorage();
+
   // cache DOM
   const body = document.querySelector("body");
 
@@ -27,7 +29,8 @@ export function UIController() {
   }
 
   function renderSidebarProjects() {
-    const storage = LocalStorage();
+    clearSidebarProjects();
+
     const todolist = storage.load();
 
     todolist.projects.forEach(project => {
@@ -40,7 +43,6 @@ export function UIController() {
   }
 
   function renderHome() {
-    const storage = LocalStorage();
     const todolist = storage.load();
 
     const allTasks = todolist.getAllTasks();
@@ -53,6 +55,8 @@ export function UIController() {
   }
 
   function renderProject(project) {
+    clearContent();
+
     const container = document.createElement("div");
     const title = document.createElement("h2");
     const description = document.createElement("p");
@@ -110,9 +114,25 @@ export function UIController() {
 
   function showAddProjectDialog() {
     const dialogTitle = projectDialog.querySelector("h2");
+    const submitBtn = projectDialog.querySelector("#submit");
+
     dialogTitle.textContent = "New Project";
 
+    submitBtn.addEventListener('click', addNewProject);
+
     projectDialog.showModal();
+  }
+
+  function addNewProject() {
+    const title = projectDialog.querySelector("#title").value;
+    const description = projectDialog.querySelector("#description").value;
+
+    const newProject = Project(title, description);
+
+    const todolist = storage.load();
+    todolist.addProject(newProject);
+    storage.save(todolist);
+    renderSidebarProjects();
   }
 
   return {
