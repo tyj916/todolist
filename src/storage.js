@@ -23,6 +23,29 @@ export function LocalStorage() {
       todolist.addProject(tempProject);
     });
 
+    if (!todolist.projects) {
+      const housework = Task("Do housework", "There's dust again.", new Date(), "medium");
+      const code = Task("Code!!", "Do your coding bro", new Date(), 'high');
+      const read = Task("Read book", "Read? Meh I really want to sleep", new Date(), 'low');
+      const pullup = Task("Pull up", "Pull up bro!", new Date(), "low");
+      const pushup = Task("Push up", "Push up!!!!", new Date(), 'low');
+
+      const workout = Project("Workout", "Gotta be strong!");
+      workout.addTask(pullup);
+      workout.addTask(pushup);
+      workout.addTask(housework);
+      workout.removeTask(housework);
+
+      const study = Project("Study", "Gotta be smart.");
+      study.addTask(code);
+      study.addTask(read);
+      study.addTask(housework);
+
+      todolist.addProject(Project("Default", "Unassigned tasks will be stored here!"));
+      todolist.addProject(workout);
+      todolist.addProject(study);
+    }
+
     return todolist;
   }
 
