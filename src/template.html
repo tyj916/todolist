@@ -42,5 +42,39 @@
       </div>
     </form>
   </dialog>
+
+  <dialog id="task">
+    <form method="dialog">
+      <h2 class="dialog-title"></h2>
+
+      <ul class="details container">
+        <li>
+          <label for="title">Task Title</label>
+          <input type="text" id="title">
+        </li>
+        <li>
+          <label for="description">Task Description</label>
+          <input type="text" id="description">
+        </li>
+        <li>
+          <label for="due-date">Due Date</label>
+          <input type="datetime-local" id="due-date">
+        </li>
+        <li>
+          <label for="priority">Priority</label>
+          <select id="priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </li>
+      </ul>
+
+      <div class="buttons">
+        <button id="submit">Submit</button>
+        <button id="cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>

@@ -24,9 +24,12 @@ study.addTask(read);
 study.addTask(housework);
 
 const todolist = Todolist();
+todolist.addProject(Project("Default", "Unassigned tasks will be stored here!"));
 todolist.addProject(workout);
 todolist.addProject(study);
 todolist.removeTask(housework);
+const getProject = todolist.getProjectByTitle("Study");
+console.log(getProject);
 
 const storage = LocalStorage();
 storage.save(todolist);

@@ -1,5 +1,6 @@
 import { LocalStorage } from "./storage";
 import { Project } from "./project";
+import { Task } from "./task";
 
 export function UIController() {
   const storage = LocalStorage();
@@ -15,6 +16,7 @@ export function UIController() {
   const content = body.querySelector("#content");
 
   const projectDialog = body.querySelector("dialog#project");
+  const taskDialog = body.querySelector("dialog#task");
 
   // bind events
   homeBtn.addEventListener("click", renderHome);
@@ -37,6 +39,15 @@ export function UIController() {
       const title = document.createElement('button');
       title.classList.add('project', 'title');
       title.textContent = project.title;
+      title.addEventListener('click', (event) => {
+        event.target.parentNode.childNodes.forEach(node => {
+          if (node.classList.contains('current')){
+            node.classList.remove('current');
+          }
+        })
+        event.target.classList.add('current');
+        renderProject(project);
+      });
       
       projectsContainer.appendChild(title);
     });
@@ -62,6 +73,8 @@ export function UIController() {
     const description = document.createElement("p");
     const tasksContainer = document.createElement("div");
     const addTaskBtn = document.createElement("button");
+
+    addTaskBtn.addEventListener("click", showAddTaskDialog);
 
     container.appendChild(title);
     container.appendChild(description);
@@ -133,6 +146,37 @@ export function UIController() {
     todolist.addProject(newProject);
     storage.save(todolist);
     renderSidebarProjects();
+
+    projectDialog.close();
+  }
+
+  function showAddTaskDialog() {
+    const dialogTitle = taskDialog.querySelector("h2");
+    const submitBtn = taskDialog.querySelector("#submit");
+
+    dialogTitle.textContent = "New Task";
+
+    submitBtn.addEventListener('click', addNewTask);
+
+    taskDialog.showModal();
+  }
+
+  function addNewTask() {
+    const title = taskDialog.querySelector("#title").value;
+    const description = taskDialog.querySelector("#description").value;
+    const dueDate = taskDialog.querySelector("#due-date").value;
+    const priority = taskDialog.querySelector("#priority").value;
+    const currentProjectTitle = content.querySelector("h2").textContent;
+
+    const newTask = Task(title, description, dueDate, priority);
+
+    const todolist = storage.load();
+    const targetProject = todolist.getProjectByTitle(currentProjectTitle);
+
+    todolist.addTask(newTask, targetProject);
+    storage.save(todolist);
+    renderProject(targetProject);
+    taskDialog.close();
   }
 
   return {

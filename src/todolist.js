@@ -26,7 +26,7 @@ export function Todolist() {
   }
 
   function addTask(task, project) {
-
+    project.addTask(task);
   }
 
   function removeTask(task) {
